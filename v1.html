@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HELIOxPENTO🦠</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:radial-gradient(circle at top,#1a0d2e,#0a0514 60%,#000);color:#e8e8f0;
+font-family:'Comic Sans MS','Segoe UI',sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+.b{border:4px solid #0a0514;border-radius:14px;box-shadow:4px 4px 0 #0a0514;font-weight:900;cursor:pointer;
+text-transform:uppercase;letter-spacing:1px;transition:.08s;-webkit-tap-highlight-color:transparent;font-family:inherit}
+.b:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #0a0514}
+.intro{position:fixed;inset:0;z-index:1000;background:#000;display:flex;flex-direction:column;align-items:center;
+justify-content:center;gap:16px;padding:20px;transition:.6s}
+.intro.hide{opacity:0;pointer-events:none}
+.intro video{width:min(90vw,500px);border-radius:14px;border:4px solid #0a0514;box-shadow:6px 6px 0 #0a0514}
+.intro button{padding:12px 24px;font-size:12px;background:#ffd93d;color:#0a0514}
+
+.vidtop{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:50;pointer-events:none}
+.vidtop video{width:min(90vw,500px);border-radius:12px;border:3px solid #0a0514}
+
+.r{position:fixed;top:14px;z-index:120;width:54px;height:54px;border-radius:50%;border:4px solid #0a0514;
+background:#ffd93d;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+box-shadow:4px 4px 0 #0a0514;transition:.08s;padding:0}
+.r:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #0a0514}
+.r .d{position:absolute;bottom:0;right:0;width:12px;height:12px;border-radius:50%;background:#f03;border:2px solid #0a0514}
+.r.on{background:linear-gradient(135deg,#fc0,#f80);animation:p 1.4s infinite}
+.r.on .d{background:#0f9}
+@keyframes p{50%{box-shadow:4px 4px 0 #0a0514,0 0 40px #f80}}
+#t{right:82px}#g{right:14px;background:linear-gradient(135deg,#b9c4d6,#7d8aa5)}
+#g.s{animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ===== SENTER BLINK ===== */
+#t.blink{background:linear-gradient(135deg,#ff3b5c,#ff8a00);animation:bl .3s infinite}
+@keyframes bl{50%{box-shadow:4px 4px 0 #0a0514,0 0 30px #ff3b5c}}
+
+/* ===== TOMBOL MUSIC 🎵 ===== */
+#m{left:14px;top:14px;z-index:1100}
+#m.on{background:linear-gradient(135deg,#2bff88,#00c46a);animation:pm 1.4s infinite}
+@keyframes pm{50%{box-shadow:4px 4px 0 #0a0514,0 0 40px #2bff88}}
+
+.gate{position:fixed;inset:0;background:#0a0514;z-index:999;display:flex;align-items:center;justify-content:center;
+padding:20px;transition:.4s}
+.gate.hide{opacity:0;pointer-events:none}
+.gbox{width:100%;max-width:320px;background:#17102b;border:4px solid #0a0514;border-radius:20px;padding:24px 20px;
+text-align:center;box-shadow:8px 8px 0 #0a0514}
+.gbox h2{font-size:18px;color:#ffd93d;margin-bottom:14px;text-shadow:2px 2px 0 #0a0514}
+.gin{width:100%;padding:14px;font-size:16px;background:#0b0618;border:4px solid #0a0514;border-radius:12px;color:#fff;
+text-align:center;letter-spacing:3px;outline:none;margin-bottom:14px;font-weight:900;font-family:inherit}
+.gin:focus{border-color:#ff4ddb}.gin.e{border-color:#f03;animation:sh .4s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.gbtn{width:100%;padding:14px;font-size:14px;background:linear-gradient(135deg,#ff4ddb,#7a3cff);color:#fff;
+text-shadow:2px 2px 0 rgba(0,0,0,.6)}
+.gmsg{margin-top:10px;font-size:12px;font-weight:900;color:#f03;min-height:14px}
+.gmsg.ok{color:#2bff88}
+
+.bp{position:relative;width:100%;max-width:400px;background:#17102b;border:4px solid #0a0514;border-radius:22px;
+padding:24px 20px 18px;box-shadow:10px 10px 0 #0a0514,0 0 34px #ff4ddb55;margin-top:200px}
+.bp h2{text-align:center;font-size:22px;color:#ffd93d;letter-spacing:2px;margin-bottom:16px;text-shadow:3px 3px 0 #0a0514}
+.lbl{display:block;font-size:11px;color:#ffd93d;margin-bottom:6px;letter-spacing:2px;text-transform:uppercase;
+font-weight:900;text-shadow:2px 2px 0 #0a0514}
+.inp{width:100%;padding:13px;font-size:15px;background:#0b0618;border:4px solid #0a0514;border-radius:12px;color:#fff;
+outline:none;margin-bottom:14px;font-weight:800;font-family:inherit;box-shadow:inset 3px 3px 0 rgba(0,0,0,.5)}
+.inp:focus{border-color:#ff4ddb}.inp.e{border-color:#f03;animation:sh .4s}
+.bt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.bt .b{padding:15px 4px;font-size:12px;background:#2b1a48;color:#e3d9ff;text-shadow:1px 1px 0 #000}
+.bt .b.active{background:linear-gradient(135deg,#ff4ddb,#7a3cff);color:#fff;transform:rotate(-2deg)}
+.bs{width:100%;padding:16px;font-size:15px;letter-spacing:2px;background:linear-gradient(135deg,#ff3b5c,#ff8a00);
+color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.7)}
+.ft{text-align:center;font-size:10px;color:#6a5a95;margin-top:14px;font-weight:800;letter-spacing:2px}
+
+.dm{position:fixed;inset:0;z-index:2000;background:rgba(5,2,12,.88);backdrop-filter:blur(6px);display:flex;
+align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:.25s}
+.dm.show{opacity:1;pointer-events:auto}
+.db{width:100%;max-width:360px;max-height:88vh;overflow-y:auto;background:#fdf6e3;color:#111;border:5px solid #0a0514;
+border-radius:20px;padding:18px 16px;box-shadow:10px 10px 0 #0a0514;transform:scale(.9);
+transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.dm.show .db{transform:scale(1)}
+.db h3{text-align:center;font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;
+text-shadow:2px 2px 0 #ffd93d}
+.sc{text-align:center;padding:18px;font-size:12px;font-weight:900;color:#7a3cff;letter-spacing:2px}
+.sc::after{content:"";display:inline-block;width:12px;height:12px;margin-left:8px;border:3px solid #7a3cff;
+border-top-color:transparent;border-radius:50%;vertical-align:-2px;animation:sp .7s linear infinite}
+.rows{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.row{display:flex;align-items:center;gap:10px;padding:9px 11px;background:#fff;border:3px solid #0a0514;
+border-radius:12px;box-shadow:3px 3px 0 #0a0514;animation:pi .3s backwards}
+@keyframes pi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.row i{font-style:normal;font-size:16px;flex:0 0 20px;text-align:center}
+.row b{flex:0 0 72px;font-size:10px;text-transform:uppercase;color:#555}
+.row span{flex:1;font-size:12px;font-weight:900;word-break:break-word}
+.row.h{background:linear-gradient(135deg,#fff2b8,#ffe066)}
+.row.h span{font-size:13.5px}
+.dc{width:100%;padding:13px;font-size:13px;background:linear-gradient(135deg,#2bff88,#00c46a);color:#04240f}
+.src{display:inline-block;font-size:9px;font-weight:900;padding:3px 8px;border-radius:20px;background:#111;color:#ffd93d;letter-spacing:1px}
+
+/* ===== HASIL BADAK ===== */
+.brl{background:#0b0618;color:#2bff88;font-family:'Courier New',monospace;font-size:11.5px;font-weight:900;
+padding:14px;border-radius:12px;border:3px solid #0a0514;white-space:pre-wrap;word-break:break-word;
+line-height:1.7;box-shadow:inset 3px 3px 0 rgba(0,0,0,.5);margin-bottom:12px;text-align:left}
+.brl .ok{color:#2bff88}
+.brl .lb{color:#ffd93d}
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro">
+<video id="iv" width="500" autoplay muted playsinline preload="auto"><source src="/intro.mp4" type="video/mp4"></video>
+<button class="b" id="sk">SKIP ⏭</button>
+</div>
+
+<!-- ===== MUSIC 🎵 ===== -->
+<button class="r" id="m">🎵<span class="d"></span></button>
+<audio id="bgm" loop preload="auto" playsinline>
+  <source src="/tes project/sound.mp3" type="audio/mpeg">
+</audio>
+
+<button class="r" id="t">🔦<span class="d"></span></button>
+<button class="r" id="g">⚙️</button>
+
+<div class="vidtop"><video autoplay muted loop playsinline><source src="/baru.mp4" type="video/mp4"></video></div>
+
+<div class="gate" id="gate"><div class="gbox">
+<h2>🔐 LOCKED</h2>
+<input type="password" id="pi" class="gin" placeholder="• • • • • • •" autocomplete="off">
+<button class="gbtn b" id="pb">UNLOCK 🔓</button>
+<div class="gmsg" id="pm"></div>
+</div></div>
+
+<div class="bp">
+<h2>🦏 BADAK</h2>
+<label class="lbl">Nomor WA</label>
+<input type="tel" id="wa" class="inp" placeholder="628xxxxxxxxxx" inputmode="numeric" maxlength="15">
+<label class="lbl">Jumlah</label>
+<div class="bt">
+<button class="b" data-b="10">10</button>
+<button class="b" data-b="15">15</button>
+<button class="b" data-b="20">20</button>
+</div>
+<button class="bs b" id="sb">SEND 🦏</button>
+<p class="ft">© HELIOxPENTO🦠</p>
+</div>
+
+<div class="dm" id="dm"><div class="db">
+<h3>⚙️ INFO HP</h3>
+<div id="dbody"><div class="sc">SCAN</div></div>
+<button class="b dc" id="dc">TUTUP ✕</button>
+</div></div>
+
+<!-- ===== MODAL HASIL BADAK ===== -->
+<div class="dm" id="brm"><div class="db">
+<h3>🦏 BADAK STATUS</h3>
+<div id="brbody"></div>
+</div></div>
+
+<script>
+/* MUSIC 🎵 */
+(()=>{
+let btn=document.getElementById('m'), a=document.getElementById('bgm'), on=0;
+let ui=()=>btn.classList.toggle('on',on);
+let start=()=>{a.volume=1;let p=a.play();p&&p.catch&&p.catch(()=>{on=0;ui()})};
+a.addEventListener('play',()=>{on=1;ui()});
+a.addEventListener('pause',()=>{on=0;ui()});
+a.addEventListener('ended',()=>{on=0;ui()});
+btn.onclick=()=>{
+a.paused?start():a.pause();
+let v=document.getElementById('iv');
+if(v&&v.paused&&!v.ended){let q=v.play();q&&q.catch&&q.catch(()=>{})}
+};
+start();
+let once=e=>{
+document.removeEventListener('click',once);
+document.removeEventListener('touchstart',once);
+if(e&&e.target&&e.target.closest&&e.target.closest('#m'))return;
+if(a.paused)start();
+};
+document.addEventListener('click',once,{passive:true});
+document.addEventListener('touchstart',once,{passive:true});
+ui();
+})();
+
+/* INTRO */
+(()=>{let i=intro, v=iv, s=sk, done=0;
+let close=()=>{if(done)return;done=1;i.classList.add('hide');setTimeout(()=>i.style.display='none',650);
+setTimeout(()=>pi.focus(),700)};
+v.onended=close; v.onerror=()=>setTimeout(close,800); s.onclick=close;
+setTimeout(close,30000); v.play().catch(()=>{})})();
+
+/* ===== SENTER (OFF → ON → BLINK → OFF) ===== */
+(()=>{
+let st=null, tr=null, mode=0, busy=0, timer=null;
+// mode: 0=off, 1=on, 2=blink
+
+let setIcon=()=>{
+  t.classList.toggle('on', mode!==0);
+  t.classList.toggle('blink', mode===2);
+  t.textContent = mode===0 ? '🔦' : mode===1 ? '💡' : '⚡';
+};
+
+let stopTracks=()=>{try{st&&st.getTracks().forEach(x=>x.stop())}catch(e){} st=null;tr=null};
+let clearTimer=()=>{if(timer){clearInterval(timer);timer=null}};
+
+let applyTorch=async(v)=>{
+  if(!tr)return;
+  try{await tr.applyConstraints({advanced:[{torch:v}]})}catch(e){}
+};
+
+let offAll=async()=>{
+  clearTimer();
+  await applyTorch(false);
+  stopTracks();
+  mode=0; setIcon();
+};
+
+let ensureStream=async()=>{
+  if(tr)return true;
+  if(!navigator.mediaDevices?.getUserMedia){alert('Browser tidak dukung senter');return false}
+  try{
+    st=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+    tr=st.getVideoTracks()[0];
+    let c={};try{c=tr.getCapabilities?tr.getCapabilities():{}}catch(e){}
+    if(!c.torch){
+      try{await tr.applyConstraints({advanced:[{torch:true}]});}
+      catch(e){stopTracks();alert('HP tidak dukung senter');return false}
+    }
+    return true;
+  }catch(e){stopTracks();alert('Gagal nyalakan senter');return false}
+};
+
+let startBlink=()=>{
+  clearTimer();
+  let on=false;
+  timer=setInterval(async()=>{
+    on=!on;
+    await applyTorch(on);
+  },180);
+};
+
+t.onclick=async()=>{
+  if(busy)return; busy=1;
+  try{
+    if(mode===0){
+      if(await ensureStream()){
+        await applyTorch(true);
+        mode=1; setIcon();
+      }
+    } else if(mode===1){
+      mode=2; setIcon();
+      startBlink();
+    } else {
+      await offAll();
+    }
+  } finally { busy=0 }
+};
+
+addEventListener('pagehide', offAll);
+document.addEventListener('visibilitychange',()=>{ if(document.hidden && mode!==0) offAll() });
+
+setIcon();
+})();
+
+/* PIN */
+(()=>{let P='HELIOxPENTO';
+let cek=()=>{if(pi.value===P){pm.className='gmsg ok';pm.textContent='✔ OK';
+setTimeout(()=>gate.classList.add('hide'),400)}
+else{pi.classList.add('e');pm.className='gmsg';pm.textContent='✖ SALAH';
+setTimeout(()=>pi.classList.remove('e'),450);pi.value='';pi.focus()}};
+pb.onclick=cek; pi.onkeydown=e=>e.key==='Enter'&&cek()})();
+
+/* BADAK */
+(()=>{
+let sel=null,busy=0;
+document.querySelectorAll('.bt .b').forEach(b=>b.onclick=()=>{
+document.querySelectorAll('.bt .b').forEach(x=>x.classList.remove('active'));
+b.classList.add('active');sel=b.dataset.b});
+
+// normalisasi nomor → format 62xxx
+let norm=n=>{
+  n=n.replace(/\D/g,'');
+  if(n.startsWith('0'))n='62'+n.slice(1);
+  else if(!n.startsWith('62'))n='62'+n;
+  return n;
+};
+
+sb.onclick=()=>{
+  if(busy)return;
+  let raw=wa.value.replace(/\D/g,'');
+  if(raw.length<8){wa.focus();wa.classList.add('e');setTimeout(()=>wa.classList.remove('e'),500);return}
+  if(!sel)return;
+
+  busy=1;sb.disabled=1;sb.textContent='✓ SENT';
+
+  let nomor=norm(raw);
+  let type=sel;
+
+  // === TEKS HASIL ===
+  let teks=
+    '💨BADAK WHATSAPP APP TERKIRIM\n'+
+    'STATUS:Succeed\n'+
+    'NOMOR: '+nomor+'\n'+
+    'TYPE BADAK: '+type+'\n'+
+    'BADAK BOT🤖🦏: BADAK WHATSAPP TERKIRIM KE WHATSAPP APP';
+
+  // === TAMPILKAN MODAL HASIL ===
+  brbody.innerHTML='<div class="brl">'+teks+
+    '</div><div class="sc">MEMBUKA WHATSAPP…</div>';
+  brm.classList.add('show');
+
+  // === AUTO BUKA WHATSAPP + AUTO CHAT ===
+  setTimeout(()=>{
+    let url='https://wa.me/'+nomor+'?text='+encodeURIComponent(teks);
+    try{ window.location.href=url; }
+    catch(e){ window.open(url,'_blank'); }
+  }, 2600);
+
+  // === RESET SETELAH SELESAI ===
+  setTimeout(()=>{
+    brm.classList.remove('show');
+    sb.disabled=0;sb.textContent='SEND 🦏';busy=0;
+  }, 6000);
+};
+})();
+
+/* ⚙️ DETEKSI */
+(()=>{
+let M=[[/^SM-|^SAMSUNG|^GT-/i,'Samsung'],[/^Pixel|^Nexus/i,'Google'],[/^CPH|^OPPO/i,'OPPO'],
+[/^ONEPLUS|^IN\d{4}|^LE\d{4}|^NE\d{4}/i,'OnePlus'],[/^RMX|^realme/i,'Realme'],
+[/^Redmi|^POCO|^Mi[\s-]|^M\d{4}/i,'Xiaomi'],[/^iQOO/i,'iQOO'],[/^VIVO|^V\d{4}|^Y\d{2}/i,'Vivo'],
+[/^HUAWEI|^(ELE|VOG|CLT|MAR|JNY|ANA|NOH|LIO|LGE)/i,'Huawei'],[/^HONOR|^(BVL|ANY|CRT|ELI|FNE|REA|RKY)/i,'Honor'],
+[/^Nokia|^TA-?\d/i,'Nokia'],[/^Infinix/i,'Infinix'],[/^TECNO|^(KC|KG|KI|KJ|CK|CH)/i,'Tecno'],
+[/^itel/i,'itel'],[/^ASUS|^ZS\d|^ZE\d|^ROG/i,'Asus'],[/^Lenovo|^TB[-_]/i,'Lenovo'],
+[/^Moto|^XT\d{3}/i,'Motorola'],[/^Sony|^XQ-?/i,'Sony'],[/^LG[-_]|^LM-/i,'LG'],[/^ZTE/i,'ZTE'],
+[/^Wiko/i,'Wiko'],[/^Sharp/i,'Sharp'],[/^Nothing|^A06\d/i,'Nothing'],[/^WALTON|^Primo/i,'Walton'],
+[/^ADVAN/i,'Advan'],[/^Polytron|^PMP/i,'Polytron'],[/^Evercoss/i,'Evercoss'],[/^Smartfren|^Andromax/i,'Smartfren']];
+let br=(mo,ua)=>{let m=(mo||'').trim();
+for(let x of M)if(x[0].test(m))return x[1];let u=ua||'';
+if(/iPhone|iPad|iPod|Macintosh/.test(u))return 'Apple';
+if(/Samsung|SM-/.test(u))return 'Samsung';
+if(/Pixel/.test(u))return 'Google';
+if(/OPPO|CPH/.test(u))return 'OPPO';
+if(/Vivo/.test(u))return 'Vivo';
+if(/Xiaomi|Redmi|POCO/.test(u))return 'Xiaomi';
+if(/Huawei/.test(u))return 'Huawei';
+if(/Realme/i.test(u))return 'Realme';
+if(/OnePlus/i.test(u))return 'OnePlus';
+if(/Infinix/i.test(u))return 'Infinix';
+if(/TECNO/i.test(u))return 'Tecno';
+if(/Nokia/i.test(u))return 'Nokia';
+if(/Asus/i.test(u))return 'Asus';
+if(/Moto/i.test(u))return 'Motorola';
+if(/Sony|Xperia/i.test(u))return 'Sony';
+if(/Lenovo/i.test(u))return 'Lenovo';
+if(/HONOR/i.test(u))return 'Honor';
+return '?'};
+let brCH=l=>{if(!l)return '';for(let x of l)if(!/Not.?A.?Brand|Chromium/i.test(x.brand))return x.brand+' '+x.version;return ''};
+let esc=s=>String(s??'-').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let row=(i,k,v,h)=>`<div class="row${h?' h':''}"><i>${i}</i><b>${k}</b><span>${esc(v)}</span></div>`;
+async function det(){
+let o={brand:'?',model:'?',os:'-',br:'-',cpu:'-',ram:'-',sc:screen.width+'×'+screen.height,touch:(navigator.maxTouchPoints||0)>0,src:'UA'};
+let ua=navigator.userAgent, uad=navigator.userAgentData;
+if(uad){try{let h=await uad.getHighEntropyValues(['model','platform','platformVersion','architecture','bitness','fullVersionList']);
+if(h.model)o.model=h.model;
+if(h.platform)o.os=h.platform+' '+(h.platformVersion||'');
+if(h.architecture)o.arch=h.architecture;
+if(h.fullVersionList){let b=brCH(h.fullVersionList);if(b)o.br=b}
+if(h.model)o.src='Client Hints'}catch(e){}}
+if(o.model==='?'){let m=ua.match(/Android[\s\d.]*;\s*([^;)]+?)(?:\s+Build[/|]|\s*\))/i);
+if(m)o.model=m[1].trim();
+else if(/iPhone/.test(ua))o.model='iPhone';
+else if(/iPad/.test(ua))o.model='iPad';
+else if(/Macintosh/.test(ua))o.model='Mac';
+else if(/Windows/.test(ua))o.model='PC'}
+o.model=o.model.replace(/\s+Build.*$/i,'').replace(/^;\s*/,'').trim();
+if(o.os==='-'){let v;
+if(v=ua.match(/Android\s+([\d.]+)/))o.os='Android '+v[1];
+else if(v=ua.match(/OS\s+(\d+[_\d]*)/))o.os='iOS '+v[1].replace(/_/g,'.');
+else if(v=ua.match(/Windows NT\s+([\d.]+)/))o.os='Windows '+v[1];
+else if(/Macintosh/.test(ua))o.os='macOS';
+else if(/Linux/.test(ua))o.os='Linux'}
+if(o.br==='-'){if(/Edg/.test(ua))o.br='Edge';
+else if(/OPR\/|Opera/.test(ua))o.br='Opera';
+else if(/SamsungBrowser/.test(ua))o.br='Samsung Internet';
+else if(/Firefox\//.test(ua))o.br='Firefox';
+else if(/CriOS\//.test(ua))o.br='Chrome iOS';
+else if(/Chrome\//.test(ua))o.br='Chrome';
+else if(/Safari\//.test(ua))o.br='Safari'}
+o.brand=br(o.model,ua);
+if(/iPhone|iPad|iPod/.test(ua)){o.brand='Apple';if(o.model==='?')o.model=/iPad/.test(ua)?'iPad':'iPhone'}
+if(/Macintosh/.test(ua)&&o.brand==='?')o.brand='Apple';
+if(navigator.hardwareConcurrency)o.cpu=navigator.hardwareConcurrency+' core';
+if(navigator.deviceMemory)o.ram=navigator.deviceMemory+' GB';
+return o}
+g.onclick=async()=>{dm.classList.add('show');g.classList.add('s');
+dbody.innerHTML='<div class="sc">SCAN</div>';
+let d=await det();await new Promise(r=>setTimeout(r,500));
+let h='<div class="rows">';
+h+=row('🏭','Brand',d.brand,1);
+h+=row('📱','Model',d.model,1);
+h+=row('💻','OS',d.os);
+h+=row('🌐','Browser',d.br);
+h+=row('🧠','CPU',d.cpu);
+h+=row('💾','RAM',d.ram);
+h+=row('🖥️','Layar',d.sc);
+h+=row('👆','Touch',d.touch?'Ya':'Tidak');
+h+='</div><div style="text-align:center"><span class="src">'+esc(d.src)+'</span></div>';
+dbody.innerHTML=h;
+setTimeout(()=>g.classList.remove('s'),700)};
+dc.onclick=()=>dm.classList.remove('show');
+dm.onclick=e=>{if(e.target===dm)dm.classList.remove('show')};
+})();
+</script>
+</body>
+</html>
